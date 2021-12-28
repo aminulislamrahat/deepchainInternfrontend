@@ -100,7 +100,12 @@ function Pending() {
     setLoading(false);
     setData(result)
     data.map((item) => {
-      if (item.v_percent >= 50) {
+      if (item.v_percent >= 50 && item.good_id != null ) {
+        updateconfirm(item.good_id)
+        deleteOperation(item.id);
+      }
+      else if (item.v_percent >= 50)
+      {
         addconfirm(item.id)
       }
     }
@@ -134,6 +139,19 @@ function Pending() {
    } catch(e) {
       console.log(e)
    }
+  }
+  async function updateconfirm(id) {
+    try{
+    let result = await fetch("http://127.0.0.1:8000/api/updateconfirm/"+id+"?_method=PUT",
+      {
+        method: 'POST'
+      })
+    result = await result.json();
+    
+    } catch (e){
+      console.log(e)
+    }
+    
   }
 
 
